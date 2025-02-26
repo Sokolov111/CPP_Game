@@ -39,7 +39,30 @@ int main(int argc, char* argv[])
 				break;
 
 			case SDL_EVENT_KEY_DOWN: // Нажатие клавиши
-				cout << "Pressed" << endl;
+
+				/*
+				scancode - считывает клавиши вне зависимости от раскладки
+				sym - есть различие в раскладке - можно с одной кнопки считать символ ru/en.
+				*/
+				switch (event.key.scancode) { // Привязаться к нажатию опред. клавиши.
+				case SDL_SCANCODE_A: // При нажатии на кнопку A.
+					cout << "Pressed Key A" << endl;
+					break;
+
+				case SDL_SCANCODE_W:
+					cout << "Pressed Key W" << endl;
+					break;
+
+				case SDL_SCANCODE_S:
+					cout << "Pressed Key S" << endl;
+					break;
+
+				case SDL_SCANCODE_D:
+					cout << "Pressed Key D" << endl;
+					break;
+				}
+				
+				//cout << "Pressed" << endl;
 			
 			case SDL_EVENT_KEY_UP: // Отпустить кдавишу
 				cout << "Released" << endl;
