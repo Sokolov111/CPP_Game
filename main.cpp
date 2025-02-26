@@ -29,79 +29,95 @@ int main(int argc, char* argv[])
 	rect.x = 0;
 	rect.y = 0;
 
+
+
+
 	bool running = true;
 	while (running) {
 		while (SDL_PollEvent(&event)) { // Отслеживание нажатий
+			//switch (event.type) // Считывание действий
+			//{
+			//case SDL_EVENT_QUIT: // При нажатии на крестик
+			//	running = false; // Закрыть окно
+			//	break;
 
-			switch (event.type) // Считывание действий
-			{
-			case SDL_EVENT_QUIT: // При нажатии на крестик
-				running = false; // Закрыть окно
-				break;
+			//case SDL_EVENT_KEY_DOWN: // Нажатие клавиши
 
-			case SDL_EVENT_KEY_DOWN: // Нажатие клавиши
+			//	/*
+			//	scancode - считывает клавиши вне зависимости от раскладки
+			//	sym - есть различие в раскладке - можно с одной кнопки считать символ ru/en.
+			//	*/
+			//	switch (event.key.scancode) { // Привязаться к нажатию опред. клавиши.
+			//	case SDL_SCANCODE_A: // При нажатии на кнопку A.
+			//		cout << "Pressed Key A" << endl;
+			//		rect.x -= 10;
+			//		break;
 
-				/*
-				scancode - считывает клавиши вне зависимости от раскладки
-				sym - есть различие в раскладке - можно с одной кнопки считать символ ru/en.
-				*/
-				switch (event.key.scancode) { // Привязаться к нажатию опред. клавиши.
-				case SDL_SCANCODE_A: // При нажатии на кнопку A.
-					cout << "Pressed Key A" << endl;
-					rect.x -= 10;
-					break;
+			//	case SDL_SCANCODE_W:
+			//		cout << "Pressed Key W" << endl;
+			//		rect.y -= 10;
+			//		
+			//		break;
 
-				case SDL_SCANCODE_W:
-					cout << "Pressed Key W" << endl;
-					rect.y -= 10;
-					
-					break;
+			//	case SDL_SCANCODE_S:
+			//		cout << "Pressed Key S" << endl;
+			//		rect.y += 10;
+			//		break;
 
-				case SDL_SCANCODE_S:
-					cout << "Pressed Key S" << endl;
-					rect.y += 10;
-					break;
+			//	case SDL_SCANCODE_D:
+			//		cout << "Pressed Key D" << endl;
+			//		rect.x += 10;
+			//		break;
+			//	}
 
-				case SDL_SCANCODE_D:
-					cout << "Pressed Key D" << endl;
-					rect.x += 10;
-					break;
-				}
+			//case SDL_EVENT_KEY_UP: // Отпустить клавишу
+			//	cout << "Released" << endl;
 
-			case SDL_EVENT_KEY_UP: // Отпустить клавишу
-				cout << "Released" << endl;
+			//case SDL_EVENT_MOUSE_BUTTON_DOWN: // Нажать кнопку мыши
 
-			case SDL_EVENT_MOUSE_BUTTON_DOWN: // Нажать кнопку мыши
+			//	switch (event.button.button) { // Считать какая клавиша мыши была нажата.
+			//	case SDL_BUTTON_LEFT:
+			//		cout << "Pressed left button" << endl;
+			//		break;
+			//	case SDL_BUTTON_RIGHT:
+			//		cout << "Pressed right button" << endl;
+			//		break;
+			//	}
 
-				switch (event.button.button) { // Считать какая клавиша мыши была нажата.
-				case SDL_BUTTON_LEFT:
-					cout << "Pressed left button" << endl;
-					break;
-				case SDL_BUTTON_RIGHT:
-					cout << "Pressed right button" << endl;
-					break;
-				}
+			//	cout << "Pressed mouse" << endl;
+			//	break;
 
-				cout << "Pressed mouse" << endl;
-				break;
+			//case SDL_EVENT_MOUSE_BUTTON_UP: // Отпустить кнопку мыши
+			//	cout << "Released mouse" << endl;
+			//	break;
 
-			case SDL_EVENT_MOUSE_BUTTON_UP: // Отпустить кнопку мыши
-				cout << "Released mouse" << endl;
-				break;
+			//case SDL_EVENT_MOUSE_MOTION:
+			//	cout << "Mouse position: " << event.motion.x << event.motion.y << endl;
+			//	break;
+			//default:
+			//	break;
 
-			case SDL_EVENT_MOUSE_MOTION:
-				cout << "Mouse position: " << event.motion.x << event.motion.y << endl;
-				break;
-			default:
-				break;
-
-			}
+			//}
 		}
 		// Цвет фона.
 		SDL_SetRenderDrawColor(renderer, 155, 55, 25, 1);
 		SDL_RenderClear(renderer);
 
+		const bool* state = SDL_GetKeyboardState(NULL); // Второй способ считать нажатия клавиш
+		if (state[SDL_SCANCODE_W]) { // Этот способ лучше, т.к двигает сразу без остановки обьект.
+			rect.y -= 10;
+		}
+		else if (state[SDL_SCANCODE_S]) {
+			rect.y += 10;
+		}
+		else if (state[SDL_SCANCODE_A]) {
+			rect.x -= 10;
+		}
+		else if (state[SDL_SCANCODE_D]) {
+			rect.x += 10;
+		}
 
+		
 
 		// Цвет квадрата
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 1);
